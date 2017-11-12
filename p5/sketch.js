@@ -10,9 +10,8 @@ function draw() {
     fill(255,87,159)
     rect(random(windowWidth), random(windowHeight), accelerationX * 10, accelerationY * 10)
   } else if (accelerationX >= 3 && accelerationX <10) {
-    noStroke()
+    noStroke();
     fill(155,77,253)
     ellipse(random(windowWidth), random(windowHeight), (accelerationX*10)^2, (accelerationX*10)^2)
-    
   }
 }
