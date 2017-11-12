@@ -7,8 +7,12 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/kat',function(req,res){
-  res.sendFile(path.join(__dirname+'/kat.html'));
+router.get('/player1',function(req,res){
+  res.sendFile(path.join(__dirname+'/player1.html'));
+});
+
+router.get('/player2',function(req,res){
+  res.sendFile(path.join(__dirname+'/player2.html'));
 });
 
 module.exports = router;

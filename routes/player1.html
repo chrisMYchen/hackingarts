@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <title>Mobile Test</title>
+<style type="text/css">
+
+.garden {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 5px solid #CCC;
+  border-radius: 10px;
+}
+
+.ball {
+  position: absolute;
+  top: 90px;
+  left: 90px;
+  width: 20px;
+  height: 20px;
+  background: green;
+  border-radius: 100%;
+}
+
+</style>
+</head>
+
+<body>
+  <div class="garden">
+    <div class="ball"></div>
+  </div>
+
+  <pre class="output"></pre>
+</body>
+
+<script>
+var ball   = document.querySelector('.ball');
+var garden = document.querySelector('.garden');
+var output = document.querySelector('.output');
+
+var maxX = garden.clientWidth  - ball.clientWidth;
+var maxY = garden.clientHeight - ball.clientHeight;
+
+function handleOrientation(event) {
+  var player1_x = event.beta;  // In degree in the range [-180,180]
+  var player1_y = event.gamma; // In degree in the range [-90,90]
+
+  output.innerHTML  = "beta : " + player1_x + "\n";
+  output.innerHTML += "gamma: " + player1_y + "\n";
+  // beta = 0, gamma = 0 when phone is flat on table
+  //straight upright: beta = 90, gamma = 0
+  //upright on left side: beta = 0, gamma = -90
+  //upright on right side: beta = 0, gamma = 90;
+
+  // Because we don't want to have the device upside down
+  // We constrain the x value to the range [-90,90]
+  if (player1_x >  90) { player1_x =  90};
+  if (player1_x < -90) { player1_x = -90};
+
+  // To make computation easier we shift the range of
+  // x and y to [0,180]
+  player1_x += 90;
+  player1_y += 90;
+
+  // 10 is half the size of the ball
+  // It center the positioning point to the center of the ball
+  ball.style.top  = (maxX*player1_x/180 - 10) + "px";
+  ball.style.left = (maxY*player1_y/180 - 10) + "px";
+}
+
+function handleMotion(event){
+  var acc_x = event.acceleration.x;
+  var acc_y = event.acceleration.y;
+  var acc_z = event.acceleration.z;
+
+  /*output.innerHTML += "acc x : " + acc_x + "\n";
+  output.innerHTML += "acc y : " + acc_y + "\n";
+  output.innerHTML += "acc z : " + acc_z + "\n";*/
+  output.innerHTML += "hello";
+}
+
+window.addEventListener('deviceorientation', handleOrientation);
+window.addEventListener('devicemotion', handleMotion);
+</script>
+</html>
